@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to MyFlix!');
 });
 
-// Displays static files withing the public folder
+// Displays static files within the public folder
 app.use(express.static('public'));
 
 // Error message
