@@ -3,11 +3,127 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Movie API</title>
+    <title>MyFlix API Documentation</title>
 </head>
 
 <body>
-    <p>Movies</p>
+    <h1>MyFlix API Documentation</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>URL</th>
+                <th>HTTP Method</th>
+                <th>Request Data Format</th>
+                <th>Response Data Body Format</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Get a list of movies</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about all the movies</td>
+            </tr>
+            <tr>
+                <td>Get data about a specific movie by title</td>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about a specific movie by title<br> Example:
+                    <br> {
+                    <br> title: 'Beauty and the Beast',
+                    <br> genre: 'Family, Fantasy, Animation',
+                    <br> rating: 'G',
+                    <br> description: 'A prince cursed to spend his days as a hideous monster sets out to regain his humanity by earning love.',
+                    <br> directors: 'Gary Trousdale, Kirk Wise',
+                    <br> released: '1991'
+                    <br> }
+                </td>
+            </tr>
+            <tr>
+                <td>Get data about a movie genre</td>
+                <td>/movies/genres/[name]</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about which movies fall into a specified genre<br> Example:
+                    <br> {
+                    <br> genre: 'Drama',
+                    <br> movies: 'Dumbo'
+                    <br> }
+                </td>
+            </tr>
+            <tr>
+                <td>Get data about the directors</td>
+                <td>/movies/directors/[name]</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding the data about what movies a specific director directed<br> Example:
+                    <br> {
+                    <br> director: 'Kirk Wise,
+                    <br> movies: 'Beauty and the Beast'
+                    <br> }
+                </td>
+            </tr>
+            <tr>
+                <td>Allow new users to register</td>
+                <td>/movies/[users]</td>
+                <td>POST></td>
+                <td>A JSON object holding data about a new user<br> Example:
+                    <br> {
+                    <br> firstName: 'Ashley',
+                    <br> lastName: 'Smith',
+                    <br> eMail: 'ASmith@gmail.com'
+                    <br> }
+                    <td>A JSON object holding new user data that was added, plus an ID<br> Example:
+                        <br> {
+                        <br> id: 8675309
+                        <br> firstName: 'Ashley',
+                        <br> lastName: 'Smith',
+                        <br> eMail: 'ASmith@gmail.com'
+                        <br> }
+                    </td>
+            </tr>
+            <tr>
+                <td>Allow users to update their info</td>
+                <td>/movies/users/[id]</td>
+                <td>PUT</td>
+                <td>none</td>
+                <td>A message indicating that the username has been updated</td>
+            </tr>
+            <tr>
+                <td>Allow users to add a movie to their favorites</td>
+                <td>/movies/users/[id]/favorites/[movieTitle]</td>
+                <td>POST</td>
+                <td>A JSON object holding data about the movie to add<br> Example:
+                    <br> {
+                    <br> title: 'Beauty and the Beast',
+                    <br> genre: 'Family, Fantasy, Animation',
+                    <br> rating: 'G',
+                    <br> description: 'A prince cursed to spend his days as a hideous monster sets out to regain his humanity by earning love.',
+                    <br> directors: 'Gary Trousdale, Kirk Wise',
+                    <br> released: '1991'
+                    <br> }
+                </td>
+                <td>A message indicating the movie was added to a user's list of favorites</td>
+            </tr>
+            <tr>
+                <td>Allow users to remove a movie from their list of favorites</td>
+                <td>/movies/users/[id]/favorites/[movieTitle]</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A message indicating that the movie was successfully removed from the user's list of favorites</td>
+            </tr>
+            <tr>
+                <td>Allow users to deregister</td>
+                <td>/movies/users/[id]</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A message indicating that the user account has successfully been deregistered</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
