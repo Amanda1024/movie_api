@@ -34,11 +34,17 @@
                 <td>A JSON object holding data about a specific movie by title<br> Example:
                     <br> {
                     <br> title: 'Beauty and the Beast',
-                    <br> genre: 'Family, Fantasy, Animation',
-                    <br> rating: 'G',
                     <br> description: 'A prince cursed to spend his days as a hideous monster sets out to regain his humanity by earning love.',
-                    <br> directors: 'Gary Trousdale, Kirk Wise',
+                    <br> rating: 'G',
                     <br> released: '1991'
+                    <br> genre: 'Family',
+                    <br> genreDescription: 'A family film, is a film genre that contains children or relates to them in the context of home and family.',
+                    <br> director: 'Gary Trousdale',
+                    <br> directorBio: 'Gary A. Trousdale is an American film director, screenwriter, animator and storyboard artist, known for directing films such as Beauty and the Beast, The Hunchback of Notre Dame, and Atlantis: The Lost Empire. He
+                    frequently works with Kirk Wise and Don Hahn.',
+                    <br> birth: '1960',
+                    <br> imagePath: 'https://upload.wikimedia.org/wikipedia/en/7/7c/Beautybeastposter.jpg',
+                    <br> featured: 'false'
                     <br> }
                 </td>
             </tr>
@@ -61,7 +67,7 @@
                 <td>none</td>
                 <td>A JSON object holding the data about what movies a specific director directed<br> Example:
                     <br> {
-                    <br> director: 'Kirk Wise,
+                    <br> director: 'Gary Trousdale,
                     <br> movies: 'Beauty and the Beast'
                     <br> }
                 </td>
@@ -72,15 +78,15 @@
                 <td>POST></td>
                 <td>A JSON object holding data about a new user<br> Example:
                     <br> {
-                    <br> firstName: 'Ashley',
-                    <br> lastName: 'Smith',
-                    <br> eMail: 'ASmith@gmail.com'
+                    <br> username: 'Ashley1234',
+                    <br> password: 'Password1234',
+                    <br> eMail: 'A.Smith@gmail.com'
                     <br> }
                     <td>A JSON object holding new user data that was added, plus an ID<br> Example:
                         <br> {
                         <br> id: 8675309
-                        <br> firstName: 'Ashley',
-                        <br> lastName: 'Smith',
+                        <br> username: 'Ashley1234',
+                        <br> password: 'Password1234',
                         <br> eMail: 'ASmith@gmail.com'
                         <br> }
                     </td>
@@ -99,11 +105,17 @@
                 <td>A JSON object holding data about the movie to add<br> Example:
                     <br> {
                     <br> title: 'Beauty and the Beast',
-                    <br> genre: 'Family, Fantasy, Animation',
-                    <br> rating: 'G',
                     <br> description: 'A prince cursed to spend his days as a hideous monster sets out to regain his humanity by earning love.',
-                    <br> directors: 'Gary Trousdale, Kirk Wise',
+                    <br> rating: 'G',
                     <br> released: '1991'
+                    <br> genre: 'Family',
+                    <br> genreDescription: 'A family film, is a film genre that contains children or relates to them in the context of home and family.',
+                    <br> director: 'Gary Trousdale',
+                    <br> directorBio: 'Gary A. Trousdale is an American film director, screenwriter, animator and storyboard artist, known for directing films such as Beauty and the Beast, The Hunchback of Notre Dame, and Atlantis: The Lost Empire. He
+                    frequently works with Kirk Wise and Don Hahn.',
+                    <br> birth: '1960',
+                    <br> imagePath: 'https://upload.wikimedia.org/wikipedia/en/7/7c/Beautybeastposter.jpg',
+                    <br> featured: 'false'
                     <br> }
                 </td>
                 <td>A message indicating the movie was added to a user's list of favorites</td>
