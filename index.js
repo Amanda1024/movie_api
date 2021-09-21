@@ -1,3 +1,13 @@
+//Mongoose package + importing models
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+//Allows Mongoose to connect to the database to perform CRUD operations
+mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+//Packages
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
@@ -5,43 +15,48 @@ const uuid = require('uuid');
 
 let topMovies = [{
         title: 'Cinderella',
-        genre: 'Fantasy, Family, Animation',
+        genre: 'Fantasy',
         rating: 'G',
-        description: 'WHen her cruel stepmother prevents her from attending the Royal Ball, Cinderella gets some unexpected help from the lovable mice Gus and Jaq, and from her Fairy Godmother.',
-        directors: 'Clyde Geronimi, Wilfred Jackson, Hamilton Luske',
+        description: 'When her cruel stepmother prevents her from attending the Royal Ball, Cinderella gets some unexpected help from the lovable mice Gus and Jaq, and from her Fairy Godmother.',
+        directors: 'Clyde Geronimi',
+        directorBio: 'Clito "Clyde" Geronimi, known as Gerry, was an Italian American animation director. He is best known for his work at Walt Disney Productions.',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/1/13/Cinderella_%28Official_1950_Film_Poster%29.png',
         released: '1950'
-
     },
     {
         title: 'Sleeping Beauty',
-        genre: 'Fantasy, Family, Animation',
+        genre: 'Fantasy',
         rating: 'G',
         description: 'After being snubbed by the royal family, a malevolent fairy places a curse on a princess which only a prince can break, along with the help of three good fairies.',
-        directors: 'Clyde Geronimi, Eric Larson, Les Clark',
+        directors: 'Clyde Geronimi',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/4/43/Sleeping_beauty_disney.jpg',
         released: '1959'
     },
     {
         title: 'Aladdin',
-        genre: 'Adventure, Comedy, Animation',
+        genre: 'Adventure',
         rating: 'G',
         description: 'A kindhearted street urchin and a power-hungry Grand Vizier vie for a magic lamp that has the power to make their deepest wishes come true.',
-        directors: 'Ron Clements, John Musker',
+        directors: 'Ron Clements',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/5/58/Aladdinposter.jpg',
         released: '1992'
     },
     {
         title: 'Peter Pan',
-        genre: 'Adventure, Family, Animation',
+        genre: 'Adventure',
         rating: 'G',
         description: 'Wendy and her brothers are whisked away to the magical world of Neverland with the hero of their stories, Peter Pan.',
-        directors: 'Clyde Geronimi, Wilfred Jackson, Hamilton Luske',
+        directors: 'Clyde Geronimi',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/4/46/PeterpanRKO.jpg',
         released: '1953'
     },
     {
         title: 'Snow White and the Seven Dwarfs',
-        genre: 'Family, Fantasy, Animation',
+        genre: 'Family',
         rating: 'G',
         description: 'Exiled into the dangerous forest by her wicked stepmother, a princess is rescued by seven dwarf miners who make her part of their household',
-        directors: 'William Cottrell, David Hand, Wilfred Jackson',
+        directors: 'William Cottrell',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/4/49/Snow_White_1937_poster.png',
         released: '1937'
 
     },
@@ -50,39 +65,44 @@ let topMovies = [{
         genre: 'Drama',
         rating: 'G',
         description: 'Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.',
-        directors: 'Samuel Armstrong, Norman Ferguson, Wilfred Jackson',
+        directors: 'Samuel Armstrong',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/a/a7/Dumbo-1941-poster.jpg',
         released: '1941'
     },
     {
         title: 'Beauty and the Beast',
-        genre: 'Family, Fantasy, Animation',
+        genre: 'Family',
         rating: 'G',
         description: 'A prince cursed to spend his days as a hideous monster sets out to regain his humanity by earning love.',
-        directors: 'Gary Trousdale, Kirk Wise',
+        directors: 'Gary Trousdale',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/7/7c/Beautybeastposter.jpg',
         released: '1991'
     },
     {
         title: 'Alice in Wonderland',
-        genre: 'Adventure, Family, Animation',
+        genre: 'Adventure',
         rating: 'G',
         description: 'Alice stumbles into the world of Wonderland. Will she get home? Not if the Queen of Hearts has her way.',
-        directors: 'Clyde Geronimi, Wilfred Jackson, Hamilton Luske',
+        directors: 'Clyde Geronimi',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/c/c1/Alice_in_Wonderland_%281951_film%29_poster.jpg',
         released: '1951'
     },
     {
         title: 'Pinocchio',
-        genre: 'Comedy, Family, Animation',
+        genre: 'Fantasy',
         rating: 'G',
         description: 'A living puppet, with the help of a cricket as his conscience, must prove himself worthy to become a real boy.',
-        directors: 'Norman Ferguson, T. Hee, Wilfred Jackson',
+        directors: 'Norman Ferguson',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Pinocchio-1940-poster.jpg',
         released: '1940'
     },
     {
         title: 'Sword in the Stone',
-        genre: 'Adventure, Comedy, Animation',
+        genre: 'Adventure',
         rating: 'G',
         description: 'A poor boy named Arthur learns the power of love, kindness, knowledge and bravery with the help of a wizard called Merlin in the path to become one of the most beloved kings in English history.',
-        directors: 'Wolfgang Reitherman, Clyde Geronimi, David Hand',
+        directors: 'Wolfgang Reitherman',
+        imagePath: 'https://upload.wikimedia.org/wikipedia/en/d/d8/SwordintheStonePoster.JPG',
         released: '1963'
     }
 ];
@@ -95,16 +115,6 @@ app.use(express.json());
 
 // Displays static files within the public folder
 app.use(express.static('public'));
-
-// Routing for root
-app.get('/', (req, res) => {
-    res.sendFile('${__dirname}/public/index.html');
-});
-
-// Routing for documentation
-app.get('/documentation', (req, res) => {
-    res.sendFile('${__dirname}/public/documentation.html');
-});
 
 // Displays a welcome message
 app.get('/', (req, res) => {
