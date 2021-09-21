@@ -5,7 +5,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 //Allows Mongoose to connect to the database to perform CRUD operations
-mongoose.connect('mongodb://localhost:27017/MyFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Packages
 const express = require('express');
@@ -15,95 +15,141 @@ const uuid = require('uuid');
 
 let topMovies = [{
         title: 'Cinderella',
-        genre: 'Fantasy',
-        rating: 'G',
         description: 'When her cruel stepmother prevents her from attending the Royal Ball, Cinderella gets some unexpected help from the lovable mice Gus and Jaq, and from her Fairy Godmother.',
-        directors: 'Clyde Geronimi',
-        directorBio: 'Clito "Clyde" Geronimi, known as Gerry, was an Italian American animation director. He is best known for his work at Walt Disney Productions.',
+        rating: 'G',
+        released: '1950',
+        genre: 'Fantasy',
+        genreDescription: 'Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, supernatural events, mythology, folklore, or exotic fantasy worlds.',
+        director: 'Clyde Geronimi',
+        directorBio: 'Clyde Geronimi, known as Gerry, was an Italian American animation director. He is best known for his work at Walt Disney Productions.',
+        birth: '1901',
+        death: '1989',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/1/13/Cinderella_%28Official_1950_Film_Poster%29.png',
-        released: '1950'
+        featured: 'True'
     },
     {
         title: 'Sleeping Beauty',
-        genre: 'Fantasy',
-        rating: 'G',
         description: 'After being snubbed by the royal family, a malevolent fairy places a curse on a princess which only a prince can break, along with the help of three good fairies.',
-        directors: 'Clyde Geronimi',
+        rating: 'G',
+        released: '1959',
+        genre: 'Fantasy',
+        genreDescription: 'Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, supernatural events, mythology, folklore, or exotic fantasy worlds.',
+        director: 'Clyde Geronimi',
+        directorBio: 'Clyde Geronimi, known as Gerry, was an Italian American animation director. He is best known for his work at Walt Disney Productions.',
+        birth: '1901',
+        death: '1989',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/4/43/Sleeping_beauty_disney.jpg',
-        released: '1959'
+        featured: 'False'
     },
     {
         title: 'Aladdin',
-        genre: 'Adventure',
-        rating: 'G',
         description: 'A kindhearted street urchin and a power-hungry Grand Vizier vie for a magic lamp that has the power to make their deepest wishes come true.',
-        directors: 'Ron Clements',
+        rating: 'G',
+        released: '1992',
+        genre: 'Adventure',
+        genreDescription: 'Adventure films are a genre of film whose plots feature elements of travel. They typically involve protagonists who must leave their home or place of comfort and go to far away lands to fulfill a goal. Settings play an important role in adventure films, sometimes as big as the characters themselves.',
+        director: 'Ron Clements',
+        directorBio: 'Ronald Francis Clements is an American animator, screenwriter, film director, and film producer. He often collaborates with fellow director John Musker.',
+        birth: '1953',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/5/58/Aladdinposter.jpg',
-        released: '1992'
+        featured: 'True'
     },
     {
         title: 'Peter Pan',
-        genre: 'Adventure',
-        rating: 'G',
         description: 'Wendy and her brothers are whisked away to the magical world of Neverland with the hero of their stories, Peter Pan.',
-        directors: 'Clyde Geronimi',
+        rating: 'G',
+        released: '1953',
+        genre: 'Adventure',
+        genreDescription: 'Adventure films are a genre of film whose plots feature elements of travel. They typically involve protagonists who must leave their home or place of comfort and go to far away lands to fulfill a goal. Settings play an important role in adventure films, sometimes as big as the characters themselves.',
+        director: 'Clyde Geronimi',
+        directorBio: 'Clyde Geronimi, known as Gerry, was an Italian American animation director. He is best known for his work at Walt Disney Productions.',
+        birth: '1901',
+        death: '1989',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/4/46/PeterpanRKO.jpg',
-        released: '1953'
+        featured: 'False'
     },
     {
         title: 'Snow White and the Seven Dwarfs',
-        genre: 'Family',
-        rating: 'G',
         description: 'Exiled into the dangerous forest by her wicked stepmother, a princess is rescued by seven dwarf miners who make her part of their household',
-        directors: 'William Cottrell',
+        rating: 'G',
+        released: '1937',
+        genre: 'Family',
+        genreDescription: 'A family film, is a film genre that contains children or relates to them in the context of home and family.',
+        director: 'William Cottrell',
+        directorBio: 'William Cottrell was born on November 19, 1906 in South Bend, Indiana, USA as William Harry Dennis Cottrell. He is known for his work on Snow White and the Seven Dwarfs (1937), Peter Pan (1953) and Alice in Wonderland (1951).',
+        birth: '1906',
+        death: '1995',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/4/49/Snow_White_1937_poster.png',
-        released: '1937'
-
+        featured: 'False'
     },
     {
         title: 'Dumbo',
-        genre: 'Drama',
-        rating: 'G',
         description: 'Ridiculed because of his enormous ears, a young circus elephant is assisted by a mouse to achieve his full potential.',
-        directors: 'Samuel Armstrong',
+        rating: 'G',
+        released: '1941',
+        genre: 'Drama',
+        genreDescription: 'In film and television, drama is a category of narrative fiction intended to be more serious than humorous in tone.',
+        director: 'Samuel Armstrong',
+        directorBio: 'Samuel Armstrong was born on February 5, 1893 in Minneapolis, Minnesota, USA. He is known for his work on Dumbo (1941), Bambi (1942) and Snow White and the Seven Dwarfs (1937).',
+        birth: '1893',
+        death: '1976',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/a/a7/Dumbo-1941-poster.jpg',
-        released: '1941'
+        featured: 'False'
     },
     {
         title: 'Beauty and the Beast',
-        genre: 'Family',
-        rating: 'G',
         description: 'A prince cursed to spend his days as a hideous monster sets out to regain his humanity by earning love.',
-        directors: 'Gary Trousdale',
+        rating: 'G',
+        released: '1991',
+        genre: 'Family',
+        genreDescription: 'A family film, is a film genre that contains children or relates to them in the context of home and family.',
+        director: 'Gary Trousdale',
+        directorBio: 'Gary A. Trousdale is an American film director, screenwriter, animator and storyboard artist, known for directing films such as Beauty and the Beast, The Hunchback of Notre Dame, and Atlantis: The Lost Empire. He frequently works with Kirk Wise and Don Hahn.',
+        birth: '1960',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/7/7c/Beautybeastposter.jpg',
-        released: '1991'
+        featured: 'False'
     },
     {
         title: 'Alice in Wonderland',
-        genre: 'Adventure',
-        rating: 'G',
         description: 'Alice stumbles into the world of Wonderland. Will she get home? Not if the Queen of Hearts has her way.',
-        directors: 'Clyde Geronimi',
+        rating: 'G',
+        released: '1951',
+        genre: 'Adventure',
+        genreDescription: 'Adventure films are a genre of film whose plots feature elements of travel. They typically involve protagonists who must leave their home or place of comfort and go to far away lands to fulfill a goal. Settings play an important role in adventure films, sometimes as big as the characters themselves.',
+        director: 'Clyde Geronimi',
+        directorBio: 'Clyde Geronimi, known as Gerry, was an Italian American animation director. He is best known for his work at Walt Disney Productions.',
+        birth: '1901',
+        death: '1989',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/c/c1/Alice_in_Wonderland_%281951_film%29_poster.jpg',
-        released: '1951'
+        featured: 'True'
     },
     {
         title: 'Pinocchio',
-        genre: 'Fantasy',
-        rating: 'G',
         description: 'A living puppet, with the help of a cricket as his conscience, must prove himself worthy to become a real boy.',
-        directors: 'Norman Ferguson',
+        rating: 'G',
+        released: '1940',
+        genre: 'Fantasy',
+        genreDescription: 'Fantasy films are films that belong to the fantasy genre with fantastic themes, usually magic, supernatural events, mythology, folklore, or exotic fantasy worlds.',
+        director: 'Norman Ferguson',
+        directorBio: 'William Norman Ferguson was an animator for Walt Disney Studios and a central contributor to the studio\'s stylistic development in the 1930s. He is most frequently noted for his contribution to the creation of Pluto, one of the studio\'s best known and most enduring characters, and is the artist most closely associated with that character.',
+        birth: '1902',
+        death: '1957',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/b/ba/Pinocchio-1940-poster.jpg',
-        released: '1940'
+        featured: 'False',
     },
     {
         title: 'Sword in the Stone',
-        genre: 'Adventure',
-        rating: 'G',
         description: 'A poor boy named Arthur learns the power of love, kindness, knowledge and bravery with the help of a wizard called Merlin in the path to become one of the most beloved kings in English history.',
-        directors: 'Wolfgang Reitherman',
+        rating: 'G',
+        released: '1963',
+        genre: 'Adventure',
+        genreDescription: 'Adventure films are a genre of film whose plots feature elements of travel. They typically involve protagonists who must leave their home or place of comfort and go to far away lands to fulfill a goal. Settings play an important role in adventure films, sometimes as big as the characters themselves.',
+        director: 'Wolfgang Reitherman',
+        directorBio: 'Wolfgang Reitherman, also known and sometimes credited as Woolie Reitherman, was a German-American animator, director and producer who was one of the Nine Old Men of core animators at Walt Disney Productions.',
+        birth: '1909',
+        death: '1985',
         imagePath: 'https://upload.wikimedia.org/wikipedia/en/d/d8/SwordintheStonePoster.JPG',
-        released: '1963'
+        featured: 'True',
     }
 ];
 
