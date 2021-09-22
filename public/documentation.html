@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td>Get data about a specific movie by title</td>
-                <td>/movies/[title]</td>
+                <td>/movies/[Title]</td>
                 <td>GET</td>
                 <td>none</td>
                 <td>A JSON object holding data about a specific movie by title<br> Example:
@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <td>Get data about a movie genre</td>
-                <td>/movies/genres/[name]</td>
+                <td>/genre/[Name]</td>
                 <td>GET</td>
                 <td>none</td>
                 <td>A JSON object holding data about which movies fall into a specified genre<br> Example:
@@ -61,26 +61,30 @@
                 </td>
             </tr>
             <tr>
-                <td>Get data about the directors</td>
-                <td>/movies/directors/[name]</td>
+                <td>Get data about a director</td>
+                <td>director/[Name]</td>
                 <td>GET</td>
                 <td>none</td>
                 <td>A JSON object holding the data about what movies a specific director directed<br> Example:
                     <br> {
                     <br> director: 'Gary Trousdale,
+                    <br> directorBio: 'Gary A. Trousdale is an American film director, screenwriter, animator and storyboard artist, known for directing films such as Beauty and the Beast, The Hunchback of Notre Dame, and Atlantis: The Lost Empire. He
+                    frequently works with Kirk Wise and Don Hahn.',
+                    <br> birth: '1960',
                     <br> movies: 'Beauty and the Beast'
                     <br> }
                 </td>
             </tr>
             <tr>
                 <td>Allow new users to register</td>
-                <td>/movies/[users]</td>
+                <td>/users</td>
                 <td>POST></td>
                 <td>A JSON object holding data about a new user<br> Example:
                     <br> {
                     <br> username: 'Ashley1234',
                     <br> password: 'Password1234',
                     <br> eMail: 'A.Smith@gmail.com'
+                    <br> birthday: '10-10-1989'
                     <br> }
                     <td>A JSON object holding new user data that was added, plus an ID<br> Example:
                         <br> {
@@ -88,19 +92,27 @@
                         <br> username: 'Ashley1234',
                         <br> password: 'Password1234',
                         <br> eMail: 'ASmith@gmail.com'
+                        <br> birthday: '10-10-1989'
                         <br> }
                     </td>
             </tr>
             <tr>
                 <td>Allow users to update their info</td>
-                <td>/movies/users/[id]</td>
+                <td>/users/[username]</td>
                 <td>PUT</td>
                 <td>none</td>
                 <td>A message indicating that the username has been updated</td>
             </tr>
             <tr>
+                <td>Gets a list of all users</td>
+                <td>/users</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>A JSON object holding data about all the movies</td>
+            </tr>
+            <tr>
                 <td>Allow users to add a movie to their favorites</td>
-                <td>/movies/users/[id]/favorites/[movieTitle]</td>
+                <td>users/[username]/movies/[movieID]</td>
                 <td>POST</td>
                 <td>A JSON object holding data about the movie to add<br> Example:
                     <br> {
@@ -122,14 +134,14 @@
             </tr>
             <tr>
                 <td>Allow users to remove a movie from their list of favorites</td>
-                <td>/movies/users/[id]/favorites/[movieTitle]</td>
+                <td>/users/[username]/movies/[movieID]</td>
                 <td>DELETE</td>
                 <td>none</td>
                 <td>A message indicating that the movie was successfully removed from the user's list of favorites</td>
             </tr>
             <tr>
                 <td>Allow users to deregister</td>
-                <td>/movies/users/[id]</td>
+                <td>users/[username]</td>
                 <td>DELETE</td>
                 <td>none</td>
                 <td>A message indicating that the user account has successfully been deregistered</td>
