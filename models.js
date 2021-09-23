@@ -24,14 +24,14 @@ let userSchema = mongoose.Schema({
     Password: { type: String, required: true },
     Email: { type: String, required: true },
     Birthday: Date,
-    FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie ' }]
+    FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
-//Creates models (will auto-populate in the db as lowercase and plural)
+// Creates models (will auto-populate in the db as lowercase and plural)
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 
 
-//Allows index.js to import models
+// Allows index.js to import models
 module.exports.Movie = Movie;
 module.exports.User = User;
