@@ -6,8 +6,13 @@ const uuid = require('uuid');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const cors = require('cors');
+
+app.use(cors());
 
 require('./passport');
+
+const { check, validationResult } = require('express-validator');
 
 
 // Logging middleware
@@ -35,31 +40,50 @@ app.get('/', (req, res) => {
 });
 
 // Establishes user account
-app.post('/users', (req, res) => {
-    Users.findOne({ Username: req.body.Username })
-        .then((user) => {
-            if (user) {
-                return res.status(400).send(req.body.Username + 'already exists');
-            } else {
-                Users
-                    .create({
-                        Username: req.body.Username,
-                        Password: req.body.Password,
-                        Email: req.body.Email,
-                        Birthday: req.body.Birthday
-                    })
-                    .then((user) => { res.status(201).json(user) })
-                    .catch((error) => {
-                        console.error(error);
-                        res.status(500).send('Error: ' + error);
-                    })
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
-        });
-});
+app.post('/users',
+    // Validation logic for request
+    // May use a chain of methods like .not().isEmpty()
+    // this means 'opposite of isEmpty' 
+    // or use .isLength({min: 5}) which specifies minimum character length
+    [
+        check('Username', 'Username is required').isLength({ min: 5 }),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+    ], (req, res) => {
+
+        // Check validation object for errors
+        let errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
+        let hashedPassword = Users.hashPassword(req.body.Password);
+        Users.findOne({ Username: req.body.Username })
+            .then((user) => {
+                if (user) {
+                    return res.status(400).send(req.body.Username + 'already exists');
+                } else {
+                    Users
+                        .create({
+                            Username: req.body.Username,
+                            Password: hashedPassword,
+                            Email: req.body.Email,
+                            Birthday: req.body.Birthday
+                        })
+                        .then((user) => { res.status(201).json(user) })
+                        .catch((error) => {
+                            console.error(error);
+                            res.status(500).send('Error: ' + error);
+                        })
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            });
+    });
 
 // Displays all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -141,11 +165,17 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 });
 
 // Updates user info by username
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put('/users/:Username', [
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+], passport.authenticate('jwt', { session: false }), (req, res) => {
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.Username }, {
             $set: {
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday,
             }
@@ -207,6 +237,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-app.listen(8080, () => {
-    console.log('myFlix is listening in port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on Port ' + port);
 });
